@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('DULLAHAN_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dullahan.local']
+ALLOWED_HOSTS = ['192.168.179.6', 'dullahan.local']
 
 
 # Application definition

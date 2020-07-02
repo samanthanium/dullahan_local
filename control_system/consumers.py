@@ -18,7 +18,6 @@ class CommandConsumer(WebsocketConsumer):
     """ Channels consumer class for interfacing with websockets and the client."""
 
     def connect(self):
-        """ """
         self.device_id = self.scope['url_route']['kwargs']['device_id']
         self.device_group_name = 'command_%s' % self.device_id
         device = Device.objects.get(id=self.device_id)
