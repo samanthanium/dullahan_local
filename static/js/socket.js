@@ -1,11 +1,15 @@
+// TODO: prettify!!
+
 window.addEventListener("load", () => {
+  // The current device ID is collected from DOM (TODO: Implement something better)
   const deviceID = document.getElementById("device-id").textContent
 
   const socket = new WebSocket(
-    "ws://" + window.location.host + "/devices/" + deviceID + "/ws/console/"
+    "ws://" + window.location.host + window.location.pathname
   )
 
-  socket.onmessage = (e) => {
+  socket.onmessage = e => {
+    // Parses the json data and updates the command history DOM
     const commandHistory = document.querySelector(".command-history")
     const data = JSON.parse(JSON.parse(e.data).message)
     let output = ""
@@ -22,7 +26,7 @@ window.addEventListener("load", () => {
     outputBox.scrollTop = outputBox.scrollHeight
   }
 
-  socket.onclose = (e) => {
+  socket.onclose = e => {
     console.error("Chat socket closed unexpectedly")
   }
   

@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 import json
 
 # Create your models here.
-# class CommandHistory(models.Model):
-
 
 class Device(models.Model):
     user = models.ForeignKey(
@@ -16,15 +14,12 @@ class Device(models.Model):
     password = models.CharField(max_length=30, blank=True, null=True)
     CONNECTION_TYPE_CHOICES = [
         ('BT', 'Bluetooth'),
-        ('ZB', 'ZigBee')
     ]
     connection_type = models.CharField(
         max_length=2,
         choices=CONNECTION_TYPE_CHOICES,
         default='BT'
     )
-    command_history = models.TextField(
-        default=json.dumps({"0000-00-00": "New Device Added"}))
     hostname = models.CharField(max_length=50, blank=True, null=True)
     uuid = models.CharField(max_length=50, blank=True, null=True)
 
@@ -33,3 +28,8 @@ class Device(models.Model):
 
     def get_command_history(self):
         return json.loads(self.command_history)
+
+class CommandHistory(models.Model):
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='history', null=True)
+    timestamp = models.DateTimeField(auto_now_add=True, blank=False, null=False)
+    command = models.TextField(blank=True, null=True)
